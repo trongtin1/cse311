@@ -3,6 +3,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
+
 const createUserService = async (name, email, password) => {
   try {
     //check user exist
@@ -26,6 +27,7 @@ const createUserService = async (name, email, password) => {
     return null;
   }
 };
+
 const loginService = async (email, password) => {
   try {
     //fetch user by email
@@ -67,6 +69,7 @@ const loginService = async (email, password) => {
     return null;
   }
 };
+
 const getUserService = async () => {
   try {
     let result = await User.find({});

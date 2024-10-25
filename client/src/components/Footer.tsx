@@ -44,7 +44,7 @@ const Footer = () => {
           About us{" "}
           <span className="w-16 h-1 bg-red-600 inline-block absolute left-0 -bottom-[1.5px] z-10" />
         </h2>
-        <Link href={"/"}>
+        {/* <Link href={"/"}>
           <Image
             src="https://i.ibb.co/ZW0SbjJ/logo-dark.png"
             alt="Logo"
@@ -53,11 +53,9 @@ const Footer = () => {
             priority={true}
             className="cursor-pointer w-40 h-auto"
           />
-        </Link>
+        </Link> */}
         <p className="text-gray-200 text-sm leading-6 tracking-wide mt-5 max-w-72">
-          Pellentesque suscipit pellentesque luctus. Nulla vel tellus nec risus
-          tempus feugiat. Donec nibh orci, sollicitudin sit amet gravida at,
-          varius sit amet sem.
+          Movie Web Application
         </p>
       </div>
       <div>
@@ -85,9 +83,7 @@ const Footer = () => {
           </p>
           <p>
             Email:{" "}
-            <span className="text-white font-medium">
-              noor.jsdivs@gmail.com
-            </span>
+            <span className="text-white font-medium">test@gmail.com</span>
           </p>
         </div>
       </div>

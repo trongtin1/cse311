@@ -29,7 +29,7 @@ const SearchInput = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="text-black space-y-1"
+        className="text-white space-y-1"
       >
         <FormField
           control={form.control}
