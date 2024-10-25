@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link"; // Use Link from next/link for routing
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const Register = () => {
@@ -9,34 +9,20 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [isEmailValid, setIsEmailValid] = useState(true); // Trạng thái kiểm tra email
-
-  useEffect(() => {
-    const checkUserEmail = async () => {
-      if (email) {
-        try {
-          const checkUser = await axios.post("http://localhost:8080/check", {
-            email,
-          });
-          console.log(checkUser.data);
-          setIsEmailValid(!checkUser.data); // Nếu email tồn tại, setIsEmailValid là false
-        } catch (error) {
-          console.error("Error checking email:", error);
-        }
-      }
-    };
-    checkUserEmail();
-  }, [email]); // Chạy khi email thay đổi
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // Ngăn reload trang
 
-    if (!isEmailValid) {
-      alert("Email đã tồn tại. Vui lòng sử dụng email khác.");
-      return;
-    }
-
     try {
+      const checkUser = await axios.post("http://localhost:8080/check", {
+        email,
+      });
+      console.log(checkUser.data);
+
+      if (checkUser.data) {
+        alert("Email đã tồn tại. Vui lòng sử dụng email khác.");
+        return;
+      }
+
       const paymentResponse = await axios.post(
         "http://localhost:8080/payment",
         {
@@ -49,17 +35,20 @@ const Register = () => {
       console.log(paymentResponse.data);
       // Kiểm tra phản hồi từ server
       if (paymentResponse.data.data.return_code === 1) {
-        // console.log("Payment initiated. Waiting for success...");
-        // const app_trans_id = paymentResponse.data.app_trans_id;
-        // const appTransId = localStorage.getItem("app_trans_id");
-        // console.log(app_trans_id);
-        window.location.href = paymentResponse.data.data.order_url;
+        // window.location.href = paymentResponse.data.order_url;
+        console.log("Payment initiated. Waiting for success...");
+        // Đợi trạng thái thanh toán cập nhật thành công
+        const app_trans_id = paymentResponse.data.app_trans_id;
+        const appTransId = localStorage.getItem("app_trans_id");
+        console.log(app_trans_id);
+        if (paymentResponse.data.data.return_code === 1) {
+          window.location.href = paymentResponse.data.data.order_url;
+        }
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
   // const checkResponse = await axios.post(
   //   `http://localhost:8080/check-status-order/${appTransId}`, // Thay thế appTransId trực tiếp vào URL
   //   {}
@@ -83,7 +72,7 @@ const Register = () => {
   return (
     <div className="relative flex justify-center items-center min-h-screen h-screen p-8">
       {/* Background Image */}
-      {/* <div className="absolute inset-0 -z-10 shadow-2xl">
+      <div className="absolute inset-0 -z-10 shadow-2xl">
         <Image
           src="/background.jpg"
           alt="Background"
@@ -91,7 +80,7 @@ const Register = () => {
           className="object-cover rounded-lg"
           priority
         />
-      </div> */}
+      </div>
 
       {/* Form Container */}
       <div className="w-full max-w-md bg-black/75 rounded p-16 z-10">
