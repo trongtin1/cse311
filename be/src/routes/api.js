@@ -3,6 +3,7 @@ const {
   createUSer,
   handleLogin,
   getUser,
+  checkUser,
 } = require("../controllers/userController");
 const {
   createPayment,
@@ -28,6 +29,7 @@ routerAPI.get("/", (req, res) => {
 routerAPI.post("/register", createUSer);
 routerAPI.post("/login", handleLogin);
 routerAPI.get("/user", getUser);
+routerAPI.post("/check", checkUser);
 routerAPI.post("/payment", createPayment);
 routerAPI.post("/callback", callback);
 routerAPI.post("/check-status-order/:app_trans_id", checkStatusOrder);

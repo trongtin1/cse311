@@ -2,6 +2,7 @@ const {
   createUserService,
   loginService,
   getUserService,
+  checkUserService,
 } = require("../services/userService");
 
 const createUSer = async (req, res) => {
@@ -21,8 +22,15 @@ const getUser = async (req, res) => {
   const data = await getUserService();
   return res.status(200).json(data);
 };
+const checkUser = async (req, res) => {
+  //   console.log("check req...", req.body);
+  const { email } = req.body;
+  const data = await checkUserService(email);
+  return res.status(200).json(data);
+};
 module.exports = {
   createUSer,
   handleLogin,
   getUser,
+  checkUser,
 };

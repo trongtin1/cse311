@@ -76,8 +76,22 @@ const getUserService = async () => {
     return null;
   }
 };
+const checkUserService = async (email) => {
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      console.log("User exists");
+      return true; // Trả về true nếu user tồn tại
+    }
+    return false; // Trả về false nếu không tìm thấy
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 module.exports = {
   createUserService,
   loginService,
   getUserService,
+  checkUserService,
 };

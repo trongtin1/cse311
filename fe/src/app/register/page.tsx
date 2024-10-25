@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,17 +13,62 @@ const Login = () => {
     e.preventDefault(); // Ngăn reload trang
 
     try {
-      const response = await axios.post("http://localhost:8080/register", {
-        name,
+      const checkUser = await axios.post("http://localhost:8080/check", {
         email,
-        password,
       });
-      console.log(response.data); // Xử lý thành công
+      console.log(checkUser.data);
+
+      if (checkUser.data) {
+        alert("Email đã tồn tại. Vui lòng sử dụng email khác.");
+        return;
+      }
+
+      const paymentResponse = await axios.post(
+        "http://localhost:8080/payment",
+        {
+          name,
+          email,
+          password,
+        }
+      );
+
+      console.log(paymentResponse.data);
+      // Kiểm tra phản hồi từ server
+      if (paymentResponse.data.data.return_code === 1) {
+        // window.location.href = paymentResponse.data.order_url;
+        console.log("Payment initiated. Waiting for success...");
+        // Đợi trạng thái thanh toán cập nhật thành công
+        const app_trans_id = paymentResponse.data.app_trans_id;
+        const appTransId = localStorage.getItem("app_trans_id");
+        console.log(app_trans_id);
+        if (paymentResponse.data.data.return_code === 1) {
+          window.location.href = paymentResponse.data.data.order_url;
+        }
+      }
     } catch (error) {
-      console.error(error); // Xử lý lỗi
+      console.error("Error:", error);
     }
   };
+  // const checkResponse = await axios.post(
+  //   `http://localhost:8080/check-status-order/${appTransId}`, // Thay thế appTransId trực tiếp vào URL
+  //   {}
+  // );
+  // if (checkResponse.data.return_code === 1) {
+  //   console.log("Payment successful. Registering user...");
 
+  //   // Nếu thanh toán thành công, lưu thông tin đăng ký
+  //   const registerResponse = await axios.post(
+  //     "http://localhost:8080/register",
+  //     {
+  //       name,
+  //       email,
+  //       password,
+  //     }
+  //   );
+  //   console.log(registerResponse.data);
+  // } else {
+  //   console.error("Payment failed or still processing.");
+  // }
   return (
     <div className="relative flex justify-center items-center min-h-screen h-screen p-8">
       {/* Background Image */}
@@ -100,4 +145,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

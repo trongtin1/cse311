@@ -11,8 +11,10 @@ const DEFAULT_PARAMS = {
   include_video: "false",
   sort_by: "popularity.desc",
   language: "en-US",
-  page: "1",
+  page: (Math.floor(Math.random() * 60) + 1).toString(),
 };
+
+// console.log(DEFAULT_PARAMS);
 
 // Hàm lấy danh sách phim đang chiếu
 export const getNowPlayingMovies = async () => {
