@@ -8,10 +8,17 @@ import { useRouter } from "next/navigation";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter(); // Sử dụng useRouter để điều hướng
+  const [error, setError] = useState(""); // Thêm trạng thái để theo dõi thông báo lỗi
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Kiểm tra nếu người dùng bỏ trống email hoặc password
+    if (!email || !password) {
+      setError("Vui lòng nhập đầy đủ thông tin tài khoản và mật khẩu.");
+      return;
+    }
 
     try {
       const response = await axios.post("http://localhost:8080/login", {
@@ -19,18 +26,16 @@ const Login = () => {
         password,
       });
 
-      const { EC, EM, access_token, user } = response.data; // Lấy thông tin từ phản hồi
-
+      const { EC, EM, access_token, user } = response.data;
       if (EC === 0) {
-        // Đăng nhập thành công
         console.log("Đăng nhập thành công:", user);
-
-        router.push("/"); // Điều hướng về trang chính
+        setError(""); // Xóa lỗi khi đăng nhập thành công
+        router.push("/");
       } else {
-        // Thất bại, hiển thị thông báo lỗi
-        console.log(EM);
+        setError(EM); // Hiển thị thông báo lỗi từ phản hồi của server
       }
     } catch (error) {
+      setError("Đăng nhập thất bại. Vui lòng thử lại.");
       console.error("Đăng nhập thất bại:", error);
     }
   };
@@ -52,6 +57,10 @@ const Login = () => {
       <div className="w-full max-w-md bg-black/75 rounded p-16 z-10">
         <h1 className="text-2xl font-medium mb-7 text-white">Log in</h1>
 
+        {error && ( // Hiển thị thông báo lỗi khi có lỗi
+          <p className="text-red-500 mb-4">{error}</p>
+        )}
+
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -69,10 +78,7 @@ const Login = () => {
           />
           <button
             type="submit"
-            className={`w-full bg-red-600 h-12 text-white rounded mt-5 cursor-pointer hover:bg-red-700 ${
-              !email || !password ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={!email || !password} // Disable nếu chưa nhập đủ thông tin
+            className="w-full bg-red-600 h-12 text-white rounded mt-5 cursor-pointer hover:bg-red-700"
           >
             Log in
           </button>

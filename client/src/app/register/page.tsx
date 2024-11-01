@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link"; // Use Link from next/link for routing
+import Link from "next/link"; 
 import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
@@ -8,67 +8,39 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // Trạng thái cho thông báo lỗi
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Ngăn reload trang
+    e.preventDefault();
+
+    // Kiểm tra nếu người dùng không nhập đủ thông tin
+    if (!name || !email || !password) {
+      setError("Vui lòng nhập đầy đủ thông tin."); // Thông báo lỗi
+      return;
+    }
 
     try {
-      const checkUser = await axios.post("http://localhost:8080/check", {
-        email,
-      });
-      console.log(checkUser.data);
-
+      const checkUser = await axios.post("http://localhost:8080/check", { email });
       if (checkUser.data) {
-        alert("Email đã tồn tại. Vui lòng sử dụng email khác.");
+        setError("Email đã tồn tại. Vui lòng sử dụng email khác.");
         return;
       }
 
-      const paymentResponse = await axios.post(
-        "http://localhost:8080/payment",
-        {
-          name,
-          email,
-          password,
-        }
-      );
+      const paymentResponse = await axios.post("http://localhost:8080/payment", {
+        name,
+        email,
+        password,
+      });
 
-      console.log(paymentResponse.data);
-      // Kiểm tra phản hồi từ server
       if (paymentResponse.data.data.return_code === 1) {
-        // window.location.href = paymentResponse.data.order_url;
-        console.log("Payment initiated. Waiting for success...");
-        // Đợi trạng thái thanh toán cập nhật thành công
-        const app_trans_id = paymentResponse.data.app_trans_id;
-        const appTransId = localStorage.getItem("app_trans_id");
-        console.log(app_trans_id);
-        if (paymentResponse.data.data.return_code === 1) {
-          window.location.href = paymentResponse.data.data.order_url;
-        }
+        window.location.href = paymentResponse.data.data.order_url;
       }
     } catch (error) {
+      setError("Đã xảy ra lỗi. Vui lòng thử lại."); 
       console.error("Error:", error);
     }
   };
-  // const checkResponse = await axios.post(
-  //   `http://localhost:8080/check-status-order/${appTransId}`, // Thay thế appTransId trực tiếp vào URL
-  //   {}
-  // );
-  // if (checkResponse.data.return_code === 1) {
-  //   console.log("Payment successful. Registering user...");
 
-  //   // Nếu thanh toán thành công, lưu thông tin đăng ký
-  //   const registerResponse = await axios.post(
-  //     "http://localhost:8080/register",
-  //     {
-  //       name,
-  //       email,
-  //       password,
-  //     }
-  //   );
-  //   console.log(registerResponse.data);
-  // } else {
-  //   console.error("Payment failed or still processing.");
-  // }
   return (
     <div className="relative flex justify-center items-center min-h-screen h-screen p-8">
       {/* Background Image */}
@@ -85,6 +57,10 @@ const Register = () => {
       {/* Form Container */}
       <div className="w-full max-w-md bg-black/75 rounded p-16 z-10">
         <h1 className="text-2xl font-medium mb-7 text-white">Sign up</h1>
+
+        {error && ( // Hiển thị thông báo lỗi
+          <p className="text-red-500 mb-4">{error}</p>
+        )}
 
         <form onSubmit={handleSubmit}>
           <input
@@ -110,12 +86,7 @@ const Register = () => {
           />
           <button
             type="submit"
-            className={`w-full bg-red-600 h-12 text-white rounded mt-5 cursor-pointer hover:bg-red-700 ${
-              !name || !email || !password
-                ? "opacity-50 cursor-not-allowed"
-                : ""
-            }`}
-            disabled={!name || !email || !password} // Disable if fields are empty
+            className="w-full bg-red-600 h-12 text-white rounded mt-5 cursor-pointer hover:bg-red-700"
           >
             Sign up
           </button>
@@ -132,10 +103,7 @@ const Register = () => {
         <div className="mt-10 text-gray-500">
           <p>
             I have an account{" "}
-            <Link
-              href="/login"
-              className="text-white font-medium cursor-pointer"
-            >
+            <Link href="/login" className="text-white font-medium cursor-pointer">
               Log In Now
             </Link>
           </p>

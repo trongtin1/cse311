@@ -9,18 +9,15 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
-
 const GenreNavigate = async () => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
         {/* Item Home */}
         <NavigationMenuItem>
-          <Link href="/" passHref>
-            <NavigationMenuLink className="cursor-pointer">
-              Home
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink className="cursor-pointer" href="/">
+            Home
+          </NavigationMenuLink>
         </NavigationMenuItem>
 
         {/* Item 2 */}
