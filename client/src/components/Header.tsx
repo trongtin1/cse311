@@ -2,32 +2,25 @@ import Image from "next/image";
 import Link from "next/link";
 import GenreDropDown from "./Dropdown";
 import SearchInput from "./SearchInput";
-import GenreNavigate from "./NavigattionContainer";
-import Login from "./Login"
+import GenreNavigate from "./NavigationContainer";
+import UserProfile from "./UserProfile";
+import Login from "./Login";
 const Header = () => {
   return (
-    <div className="w-full flex items-center justify-between  p-5 bg-[#12121280] gap-4 md:gap-0 sticky z-50 top-0">
+    <div className="flex items-center p-5 bg-[#12121280] sticky z-50 top-0 w-full">
       {/* Logo */}
-      {/* <Link href={"/"}>
-        <Image
-          src="https://i.ibb.co/ZW0SbjJ/logo-dark.png"
-          alt="Logo"
-          width={120}
-          height={100}
-          priority={true}
-          className="cursor-pointer w-40 h-auto"
-        />
-      </Link> */}
-      <div className="flex-1 flex justify-center">
-        <GenreNavigate />
-      </div>
+
       {/* Others */}
-      <div className="text-white flex space-x-2 items-center">
-        {/* Genre */}
+      <div className="text-white flex items-center space-x-7 ml-auto">
+        <div className="mr-44">
+          <GenreNavigate />
+        </div>
+
+        <UserProfile />
         <GenreDropDown />
-        {/* Search */}
-        {/* <SearchInput /> */}
+        <SearchInput />
         <Login />
+        {/* Search */}
       </div>
     </div>
   );

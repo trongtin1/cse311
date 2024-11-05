@@ -11,6 +11,7 @@ const createUSer = async (req, res) => {
   const data = await createUserService(name, email, password);
   return res.status(200).json(data);
 };
+
 const handleLogin = async (req, res) => {
   //   console.log("check req...", req.body);
   const { email, password } = req.body;

@@ -91,3 +91,24 @@ export const getMovieDetails = async (id: string) => {
   });
   return response.data;
 };
+// utils/fetchGenres.ts
+
+export const fetchGenres = async () => {
+  const url = "https://api.themoviedb.org/3/genre/movie/list?language=en";
+  const options: RequestInit = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_KEY}`,
+    },
+  };
+
+  const response = await fetch(url, options);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch genres");
+  }
+
+  const data = await response.json();
+  return data; // Trả về dữ liệu genres
+};

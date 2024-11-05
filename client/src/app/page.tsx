@@ -6,6 +6,8 @@ import {
   getTopRatedMovies,
   getUpcomingMovies,
 } from "@/api/getMovies";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default async function Home() {
   const nowPlayingMovies = await getNowPlayingMovies();
@@ -15,6 +17,7 @@ export default async function Home() {
 
   return (
     <main>
+      {/* <Header /> */}
       <CaroselBanner />
       <div className="flex flex-col space-y-2">
         <MovieContainer movies={nowPlayingMovies} title="Now Playing" />
@@ -22,6 +25,7 @@ export default async function Home() {
         <MovieContainer movies={topRatedMovies} title="Top Rated" />
         <MovieContainer movies={popularMovies} title="Popular" />
       </div>
+      {/* <Footer /> */}
     </main>
   );
 }

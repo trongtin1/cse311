@@ -9,16 +9,16 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // Thêm trạng thái để theo dõi thông báo lỗi
+
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     // Kiểm tra nếu người dùng bỏ trống email hoặc password
-    if (!email || !password) {
-      setError("Vui lòng nhập đầy đủ thông tin tài khoản và mật khẩu.");
-      return;
-    }
+    // if (!email || !password) {
+    //   setError("Vui lòng nhập đầy đủ thông tin tài khoản và mật khẩu.");
+    //   return;
+    // }
 
     try {
       const response = await axios.post("http://localhost:8080/login", {
@@ -29,8 +29,8 @@ const Login = () => {
       const { EC, EM, access_token, user } = response.data;
       if (EC === 0) {
         console.log("Đăng nhập thành công:", user);
-        setError(""); // Xóa lỗi khi đăng nhập thành công
-        router.push("/");
+
+        router.push("/"); // Điều hướng về trang chính
       } else {
         setError(EM); // Hiển thị thông báo lỗi từ phản hồi của server
       }
@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <div className="relative flex justify-center items-center min-h-screen h-screen p-8">
       {/* Background Image */}
-      <div className="absolute inset-0 -z-10 shadow-2xl">
+      {/* <div className="absolute inset-0 -z-10 shadow-2xl">
         <Image
           src="/background.jpg"
           alt="Background"
@@ -51,15 +51,11 @@ const Login = () => {
           className="object-cover rounded-lg"
           priority
         />
-      </div>
+      </div> */}
 
       {/* Form Container */}
       <div className="w-full max-w-md bg-black/75 rounded p-16 z-10">
         <h1 className="text-2xl font-medium mb-7 text-white">Log in</h1>
-
-        {error && ( // Hiển thị thông báo lỗi khi có lỗi
-          <p className="text-red-500 mb-4">{error}</p>
-        )}
 
         <form onSubmit={handleSubmit}>
           <input

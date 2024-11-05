@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link"; 
+import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
@@ -20,23 +20,28 @@ const Register = () => {
     }
 
     try {
-      const checkUser = await axios.post("http://localhost:8080/check", { email });
+      const checkUser = await axios.post("http://localhost:8080/check", {
+        email,
+      });
       if (checkUser.data) {
         setError("Email đã tồn tại. Vui lòng sử dụng email khác.");
         return;
       }
 
-      const paymentResponse = await axios.post("http://localhost:8080/payment", {
-        name,
-        email,
-        password,
-      });
+      const paymentResponse = await axios.post(
+        "http://localhost:8080/payment",
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
       if (paymentResponse.data.data.return_code === 1) {
         window.location.href = paymentResponse.data.data.order_url;
       }
     } catch (error) {
-      setError("Đã xảy ra lỗi. Vui lòng thử lại."); 
+      setError("Đã xảy ra lỗi. Vui lòng thử lại.");
       console.error("Error:", error);
     }
   };
@@ -44,7 +49,7 @@ const Register = () => {
   return (
     <div className="relative flex justify-center items-center min-h-screen h-screen p-8">
       {/* Background Image */}
-      <div className="absolute inset-0 -z-10 shadow-2xl">
+      {/* <div className="absolute inset-0 -z-10 shadow-2xl">
         <Image
           src="/background.jpg"
           alt="Background"
@@ -52,7 +57,7 @@ const Register = () => {
           className="object-cover rounded-lg"
           priority
         />
-      </div>
+      </div> */}
 
       {/* Form Container */}
       <div className="w-full max-w-md bg-black/75 rounded p-16 z-10">
@@ -103,7 +108,10 @@ const Register = () => {
         <div className="mt-10 text-gray-500">
           <p>
             I have an account{" "}
-            <Link href="/login" className="text-white font-medium cursor-pointer">
+            <Link
+              href="/login"
+              className="text-white font-medium cursor-pointer"
+            >
               Log In Now
             </Link>
           </p>

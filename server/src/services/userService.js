@@ -79,6 +79,7 @@ const getUserService = async () => {
     return null;
   }
 };
+
 const checkUserService = async (email) => {
   try {
     const user = await User.findOne({ email });
