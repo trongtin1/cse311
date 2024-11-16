@@ -1,3 +1,6 @@
+
+'use client'
+
 import CaroselBanner from "@/components/CaroselBanner";
 import MovieContainer from "@/components/MovieContainer";
 import {
@@ -8,6 +11,7 @@ import {
 } from "@/api/getMovies";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Head } from "next/document";
 
 export default async function Home() {
   const nowPlayingMovies = await getNowPlayingMovies();
