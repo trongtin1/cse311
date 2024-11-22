@@ -1,7 +1,7 @@
 "use client";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoPlay from "embla-carousel-autoplay";
-import { Movie } from "../../type";
+import { Movie } from "../../../type";
 import Image from "next/image";
 import { getImagePath } from "@/api/getImagePath";
 

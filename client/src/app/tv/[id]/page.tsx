@@ -1,4 +1,4 @@
-import VideoPlayer from "@/components/VideoPlayer";
+import VideoPlayer from "@/components/MOVIE/VideoPlayer";
 import { getImagePath } from "@/api/getImagePath";
 import { getTvDetails, getTvVideos, getPopularTv } from "@/api/getTvShows";
 import { Metadata } from "next";

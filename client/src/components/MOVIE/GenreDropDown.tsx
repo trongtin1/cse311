@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { GENRES, TV_GENRES } from "../../type";
+import { GENRES, TV_GENRES } from "../../../type";
 import { usePathname } from "next/navigation";
 
 const SmartGenreDropdown = () => {

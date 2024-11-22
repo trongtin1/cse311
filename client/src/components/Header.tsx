@@ -7,7 +7,7 @@ import { Search, Bookmark } from "lucide-react";
 import { useState, useEffect } from "react";
 import SearchModal from "./SearchModal";
 import Image from "next/image";
-import GenreDropDown from "./GenreDropDown";
+import GenreDropDown from "./MOVIE/GenreDropDown";
 
 const Header = () => {
   const { userId, isLoaded } = useAuth();

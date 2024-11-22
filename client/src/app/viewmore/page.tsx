@@ -1,4 +1,4 @@
-import MovieContainer from "@/components/MovieContainer";
+import MovieContainer from "@/components/MOVIE/MovieContainer";
 import {
   getNowPlayingMovies,
   getPopularMovies,

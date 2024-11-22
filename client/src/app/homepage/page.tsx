@@ -1,5 +1,5 @@
-import CaroselBanner from "@/components/CaroselBanner";
-import MovieContainer from "@/components/MovieContainer";
+import CaroselBanner from "@/components/MOVIE/CaroselBanner";
+import MovieContainer from "@/components/MOVIE/MovieContainer";
 
 import Header from "@/components/Header";
 import {

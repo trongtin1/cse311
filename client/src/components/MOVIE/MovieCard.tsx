@@ -1,5 +1,5 @@
 "use client";
-import { Movie } from "../../type";
+import { Movie } from "../../../type";
 import Image from "next/image";
 import { getImagePath } from "@/api/getImagePath";
 import { useRouter } from "next/navigation";

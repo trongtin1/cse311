@@ -1,5 +1,5 @@
-import MovieContainer from "@/components/MovieContainer";
-import VideoPlayer from "@/components/VideoPlayer";
+import MovieContainer from "@/components/MOVIE/MovieContainer";
+import VideoPlayer from "@/components/MOVIE/VideoPlayer";
 import { getImagePath } from "@/api/getImagePath";
 import {
   getMovieDetails,

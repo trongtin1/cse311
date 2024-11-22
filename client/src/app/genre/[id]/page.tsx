@@ -1,4 +1,4 @@
-import MovieContainer from "@/components/MovieContainer";
+import MovieContainer from "@/components/MOVIE/MovieContainer";
 import { getDiscoverMovies } from "@/api/getMovies";
 
 interface Props {
