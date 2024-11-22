@@ -1,50 +1,42 @@
-// app/layout.tsx
-
-
-import { Metadata } from "next";
-import { Inter } from "next/font/google";
+import React from "react";
 import "./globals.css";
+import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import AuthPageCheck from "@/components/AuthPageCheck";
-import { redirect } from "next/navigation";
-
+import Footer from "@/components/Footer";
+import GenreDropDown from "@/components/GenreDropDown";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
-
-
-export const metadata: Metadata = {
-  title: "Movie Streaming Studio",
-  description: "An application for your favorite movies",
+export const metadata = {
+  title: "Movie App",
+  description: "Movie App Early Access",
 };
 
-export default function RootLayout({
-  children,
-}: {
+interface RootLayoutProps {
   children: React.ReactNode;
-}) {
-  //redirect("/login");
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <main className="w-full h-screen flex-col">
+    <ClerkProvider dynamic>
+      <html lang="en">
+        <body className={inter.className}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            {/* <Header /> */}
-            <AuthPageCheck>
-              {children}
-            </AuthPageCheck>
-            {/* <Footer /> */}
+            <main className="min-h-screen flex flex-col">
+              <Header />
+              <div className="flex-grow">{children}</div>
+              <Footer />
+            </main>
           </ThemeProvider>
-        </main>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -4,69 +4,51 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
-const createUserService = async (name, email, password) => {
+const createUserService = async (userData) => {
   try {
-    //check user exist
-    const user = await User.findOne({ email });
-    if (user) {
-      console.log("user exist");
-      return null;
-    }
-    //hash user password
-    const hashPassword = await bcrypt.hash(password, saltRounds);
-    //save user to database
-    let result = await User.create({
-      name: name,
-      email: email,
-      password: hashPassword,
+    const existingUser = await User.findOne({
+      $or: [{ email: userData.email }, { clerkId: userData.clerkId }],
     });
-    console.log(result);
-    return result;
+
+    if (existingUser) {
+      console.log("User already exists");
+      return {
+        success: false,
+        message: "User with this email or Clerk ID already exists",
+      };
+    }
+
+    const user = await User.create({
+      clerkId: userData.clerkId,
+      email: userData.email,
+      name: `${userData.firstName} ${userData.lastName}`.trim(),
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      photo: userData.photo,
+    });
+
+    console.log("User created successfully:", user);
+    return {
+      success: true,
+      data: user,
+    };
   } catch (error) {
-    console.log(error);
-    return null;
+    console.error("Error creating user:", error);
+    throw new Error("Database error while creating user");
   }
 };
 
-const loginService = async (email, password) => {
+const loginService = async (email) => {
   try {
-    //fetch user by email
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email });
     if (user) {
-      //compare password
-      const isMatchPassword = await bcrypt.compare(password, user.password);
-      if (isMatchPassword == false) {
-        return {
-          EC: 2,
-          EM: "email, password khong hop le",
-        };
-      } else {
-        //create access token
-        const payload = {
-          email: user.email,
-          name: user.name,
-        };
-        const access_token = jwt.sign(payload, process.env.JWT_SECRET, {
-          expiresIn: process.env.JWT_EXPIRE,
-        });
-        return {
-          EC: 0,
-          access_token,
-          user: {
-            email: user.email,
-            name: user.name,
-          },
-        };
-      }
-    } else {
-      return {
-        EC: 1,
-        EM: "email/password khong hop le",
-      };
+      console.log("User exists");
+      return true; // Trả về true nếu user tồn tại
     }
+    return false; // Trả về false nếu không tìm thấy
   } catch (error) {
-    console.log(error);
-    return null;
+    console.error(error);
+    throw error;
   }
 };
 
@@ -84,12 +66,13 @@ const checkUserService = async (email) => {
   try {
     const user = await User.findOne({ email });
     if (user) {
-      console.log("User exists");
-      return true; // Trả về true nếu user tồn tại
+      console.log("User exists in database");
+      return true;
     }
-    return false; // Trả về false nếu không tìm thấy
+    console.log("User does not exist in database");
+    return false;
   } catch (error) {
-    console.error(error);
+    console.error("Error checking user:", error);
     throw error;
   }
 };

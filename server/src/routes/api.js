@@ -36,4 +36,5 @@ routerAPI.get("/admin/dashboard", adminController.getDashboard);
 routerAPI.post("/admin/users", adminController.createUser);
 routerAPI.put("/admin/users/:id", adminController.updateUser);
 routerAPI.post("/admin/users/:id/delete", adminController.deleteUser);
+
 module.exports = routerAPI; //export default

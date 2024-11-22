@@ -1,39 +1,32 @@
+"use client";
 import Link from "next/link";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
-const GenreNavigate = async () => {
+
+const GenreNavigate = () => {
   return (
     <NavigationMenu>
-      <NavigationMenuList>
-        {/* Item Home */}
-        <NavigationMenuItem>
-          <NavigationMenuLink className="cursor-pointer" href="/">
-            Home
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-
-        {/* Item 2 */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Thể loại 2</NavigationMenuTrigger>
-        </NavigationMenuItem>
-
-        {/* Item 3 */}
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Thể loại 3</NavigationMenuTrigger>
-        </NavigationMenuItem>
+      <NavigationMenuList className="flex items-center space-x-8">
+        {[
+          { title: "HOME", href: "/homepage" },
+          { title: "MOVIES", href: "/homepage" },
+          { title: "TV SHOWS", href: "/tv-shows" },
+          { title: "AUDIOBOOKS", href: "" },
+          { title: "BLOG", href: "" },
+        ].map((item) => (
+          <NavigationMenuItem key={item.title}>
+            <Link href={item.href} legacyBehavior passHref>
+              <NavigationMenuLink className="text-white hover:text-gray-300 text-sm font-medium tracking-wide">
+                {item.title}
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        ))}
       </NavigationMenuList>
-
-      {/* Indicator và viewport */}
-      <NavigationMenuIndicator />
-      <NavigationMenuViewport />
     </NavigationMenu>
   );
 };

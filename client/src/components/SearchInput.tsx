@@ -10,7 +10,7 @@ const formSchema = z.object({
   input: z.string().min(2).max(30),
 });
 
-const SearchInput = () => {
+const SearchInput = ({ onClose }: SearchInputProps) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -23,21 +23,23 @@ const SearchInput = () => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     router.push(`/search/${values.input}`);
     form.reset();
+    if (onClose) onClose();
   };
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="text-white space-y-1"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="input"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Search ..." {...field} />
+                <Input
+                  placeholder="Search here..."
+                  className="border-0 rounded-r bg-white text-white h-10 focus-visible:ring-0"
+                  {...field}
+                />
               </FormControl>
             </FormItem>
           )}
