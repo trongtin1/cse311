@@ -4,64 +4,44 @@ const {
   getUserService,
   checkUserService,
 } = require("../services/userService");
+const UserController = {
+  createUSer: async (req, res) => {
+    try {
+      const { userData } = req.body;
 
-// In server/src/controllers/userController.js
-const createUSer = async (req, res) => {
-  try {
-    const { userData } = req.body;
-    console.log("Received user data:", userData);
+      if (!userData) {
+        return res.status(400).json({
+          success: false,
+          message: "No user data provided",
+        });
+      }
 
-    if (!userData || !userData.clerkId || !userData.email) {
-      return res.status(400).json({
+      const data = await createUserService(userData);
+      return res.status(200).json(data);
+    } catch (error) {
+      console.error("Error creating user:", error);
+      return res.status(500).json({
         success: false,
-        message: "Missing required user data",
+        message: error.message || "Error creating user",
       });
     }
-
-    const data = await createUserService(userData);
+  },
+  handleLogin: async (req, res) => {
+    const { email, password } = req.body;
+    const data = await loginService(email, password);
+    console.log(data);
     return res.status(200).json(data);
-  } catch (error) {
-    console.error("Error creating user:", error);
-    return res.status(500).json({
-      success: false,
-      message: error.message || "Error creating user",
-    });
-  }
-};
-const handleLogin = async (req, res) => {
-  //   console.log("check req...", req.body);
-  const { email, password } = req.body;
-  const data = await loginService(email, password);
-  return res.status(200).json(data);
-};
-const getUser = async (req, res) => {
-  //   console.log("check req...", req.body);
-  const data = await getUserService();
-  return res.status(200).json(data);
-};
-const checkUser = async (req, res) => {
-  try {
+  },
+  getUser: async (req, res) => {
+    const data = await getUserService();
+    return res.status(200).json(data);
+  },
+  checkUser: async (req, res) => {
     const { email } = req.body;
-    if (!email) {
-      return res.status(400).json({
-        success: false,
-        message: "Email is required",
-      });
-    }
-
-    const exists = await checkUserService(email);
-    return res.status(200).json(exists);
-  } catch (error) {
-    console.error("Error checking user:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Error checking user",
-    });
-  }
+    const data = await checkUserService(email);
+    return res.status(200).json(data);
+  },
 };
 module.exports = {
-  createUSer,
-  handleLogin,
-  getUser,
-  checkUser,
+  UserController,
 };

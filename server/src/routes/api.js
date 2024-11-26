@@ -1,10 +1,5 @@
 const express = require("express");
-const {
-  createUSer,
-  handleLogin,
-  getUser,
-  checkUser,
-} = require("../controllers/userController");
+const { UserController } = require("../controllers/userController");
 const {
   createPayment,
   callback,
@@ -18,14 +13,14 @@ routerAPI.get("/", (req, res) => {
   return res.status(200).json("hello world12312312");
 });
 //user api
-routerAPI.post("/register", createUSer);
-routerAPI.post("/login", handleLogin);
-routerAPI.get("/user", getUser);
-routerAPI.post("/check", checkUser);
+routerAPI.post("/register", UserController.createUSer);
+routerAPI.post("/login", UserController.handleLogin);
+routerAPI.get("/user", UserController.getUser);
+routerAPI.post("/check-user", UserController.checkUser);
 //payment api
 routerAPI.post("/payment", createPayment);
 routerAPI.post("/callback", callback);
-routerAPI.post("/check-status-order/:app_trans_id", checkStatusOrder);
+routerAPI.post("/check-status-transaction/:orderId", checkStatusOrder);
 //login api
 routerAPI.post("/admin/login", adminController.login);
 routerAPI.get("/admin/login", (req, res) => {

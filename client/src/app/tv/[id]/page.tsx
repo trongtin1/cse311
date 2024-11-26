@@ -33,78 +33,104 @@ const TVShowDetails = async ({ params: { id } }: Props) => {
   const popularShows = await getPopularTv();
 
   return (
-    <div className="bg-black text-white min-h-screen">
-      <div className="container mx-auto px-4">
-        <div className="py-10">
-          {/* Title Section */}
-          <h1 className="text-5xl font-bold mb-6">{details?.name}</h1>
+    <div className="bg-[#1a1a1a] text-white min-h-screen">
+      <div className="container mx-auto px-4 max-w-[1400px]">
+        <div className="flex flex-col lg:flex-row gap-8 mb-8">
+          {/* Left Content */}
+          <div className="flex-1">
+            {/* Title */}
+            <h1 className="text-6xl font-bold mb-6">{details.name}</h1>
 
-          {/* Metadata Row */}
-          <div className="flex items-center gap-4 mb-8">
-            <div className="bg-green-500 rounded-full p-2">
-              <span className="font-bold">{details.vote_average}</span>
-            </div>
-            <span className="text-gray-300">
-              {details.first_air_date?.split("-")[0]}
-            </span>
-            <span className="text-gray-300">
-              {details.episode_run_time?.[0]} min
-            </span>
-            <span className="border border-white rounded px-2">CC</span>
-            {details?.genres?.map((genre: any) => (
-              <span key={genre.id} className="text-red-500">
-                {genre.name}
+            {/* Info Row */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-[#2d2d2d] rounded-lg px-3 py-1 flex items-center gap-2">
+                <span className="font-bold text-xl">
+                  {Math.round(details.vote_average * 10) / 10}
+                </span>
+
+                <span>Score</span>
+              </div>
+              <span>{new Date(details.first_air_date).getFullYear()}</span>
+              <span className="px-2 py-1 bg-[#2d2d2d] rounded">
+                {details.episode_run_time[0] || "N/A"} min
               </span>
-            ))}
+              <span className="px-2 py-1 bg-[#2d2d2d] rounded">Ultra HD</span>
+              <span className="border border-gray-600 px-2 rounded">CC</span>
+              <span className="text-red-500">
+                {details.genres.map((g) => g.name).join(" | ")}
+              </span>
+            </div>
+
+            {/* Tagline */}
+            <p className="text-gray-400 italic mb-4">{details.tagline}</p>
+
+            {/* Overview */}
+            <p className="text-gray-300 text-lg mb-6">{details.overview}</p>
+
+            {/* Additional Info */}
+            <div className="grid grid-cols-3 gap-6 mb-6">
+              <div>
+                <span className="text-gray-400">Creator</span>
+                <p className="font-medium">
+                  {details.created_by[0]?.name || "N/A"}
+                </p>
+              </div>
+              <div>
+                <span className="text-gray-400">Seasons</span>
+                <p className="font-medium">{details.number_of_seasons}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">Episodes</span>
+                <p className="font-medium">{details.number_of_episodes}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">Status</span>
+                <p className="font-medium">{details.status}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">Network</span>
+                <p className="font-medium">{details.networks[0]?.name}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">Production</span>
+                <p className="font-medium">
+                  {details.production_companies[0]?.name}
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-4">
+              <button className="bg-white text-black px-6 py-2 rounded-full hover:bg-gray-200">
+                + ADD YOUR LIST
+              </button>
+              <div className="flex items-center gap-2">
+                <button className="bg-[#2d2d2d] p-2 rounded-full hover:bg-[#3d3d3d]">
+                  👍 {details.vote_count} likes
+                </button>
+              </div>
+            </div>
           </div>
 
-          {/* Main Content */}
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Left: Image and Description */}
-            <div className="w-full lg:w-2/3">
-              <div className="rounded-lg overflow-hidden mb-6">
-                <Image
-                  src={getImagePath(details?.backdrop_path)}
-                  alt={details?.name}
-                  width={1920}
-                  height={1080}
-                  className="w-full h-auto"
-                />
-              </div>
-              <p className="text-lg leading-relaxed">{details?.overview}</p>
-            </div>
-
-            {/* Right: Additional Info */}
-            <div className="w-full lg:w-1/3">
-              <div className="bg-gray-900 rounded-lg p-6">
-                <div className="mb-4">
-                  <h3 className="text-gray-400">Director</h3>
-                  <p>{details?.created_by?.[0]?.name || "N/A"}</p>
-                </div>
-                <div className="mb-4">
-                  <h3 className="text-gray-400">Status</h3>
-                  <p
-                    className={
-                      details?.status === "Ended"
-                        ? "text-red-500"
-                        : "text-green-500"
-                    }
-                  >
-                    {details.status}
-                  </p>
-                </div>
-                <div className="mb-4">
-                  <h3 className="text-gray-400">Production</h3>
-                  <p>{details?.production_companies?.[0]?.name || "N/A"}</p>
-                </div>
-              </div>
-            </div>
+          {/* Right Content - Poster */}
+          <div className="w-[300px] h-[450px] relative flex-shrink-0">
+            <Image
+              src={getImagePath(details.poster_path)}
+              alt={details.name}
+              fill
+              className="object-cover rounded-lg"
+              priority
+            />
           </div>
         </div>
 
-        {/* Video Player and Popular Shows sections remain unchanged */}
-        <VideoPlayer videos={videos} />
-        <div className="mt-6">
+        {/* Video Player */}
+        <div className="mb-12">
+          <VideoPlayer videos={videos} />
+        </div>
+
+        {/* Popular Shows */}
+        <div className="py-8">
           <TVShowContainer
             shows={popularShows}
             title="Popular Shows"

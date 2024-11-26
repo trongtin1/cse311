@@ -1,6 +1,5 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import SearchInput from "./SearchInput";
-import GenreDropDown from "./GenreDropDown";
 
 interface SearchModalProps {
   isOpen: boolean;

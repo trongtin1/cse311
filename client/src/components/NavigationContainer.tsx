@@ -12,7 +12,6 @@ const GenreNavigate = () => {
     <NavigationMenu>
       <NavigationMenuList className="flex items-center space-x-8">
         {[
-          { title: "HOME", href: "/homepage" },
           { title: "MOVIES", href: "/homepage" },
           { title: "TV SHOWS", href: "/tv-shows" },
           { title: "AUDIOBOOKS", href: "" },

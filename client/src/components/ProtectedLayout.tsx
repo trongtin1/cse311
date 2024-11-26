@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -8,18 +8,27 @@ export default function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { userId, isLoaded } = useAuth();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoaded && !userId) {
-      router.push("/sign-in");
+    if (status === "unauthenticated") {
+      console.log("User not authenticated, redirecting to login");
+      router.push("/login");
     }
-  }, [isLoaded, userId, router]);
+  }, [status, router]);
 
-  if (!isLoaded || !userId) {
-    return null;
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
+      </div>
+    );
   }
 
-  return <>{children}</>;
+  if (status === "authenticated") {
+    return <>{children}</>;
+  }
+
+  return null;
 }

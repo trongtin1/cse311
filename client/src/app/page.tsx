@@ -1,8 +1,18 @@
-import React from "react";
-import Link from "next/link";
-import { useAuth } from "@clerk/nextjs";
+"use client";
+
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const Home: React.FC = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const shouldRedirect = localStorage.getItem("redirectToProcess");
+    if (shouldRedirect === "true") {
+      router.push("/process");
+    }
+  }, []);
+
   return (
     <>
       <div

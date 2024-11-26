@@ -1,18 +1,15 @@
 const mongoose = require("mongoose");
 
-const paymentSchema = new mongoose.Schema({
-  app_trans_id: { type: String, required: true },
-  app_user: { type: String, required: true },
-  amount: { type: Number, required: true },
-  status: {
-    type: String,
-    enum: ["pending", "success", "failed"],
-    default: "pending",
-  },
-  created_at: { type: Date, default: Date.now },
-  updated_at: { type: Date, default: Date.now },
+// Define the Payment schema
+const payment = new mongoose.Schema({
+  orderId: String,
+  app_user: String,
+  amount: Number,
+  status: String,
+  createdAt: { type: Date, default: Date.now },
 });
 
-const Payment = mongoose.model("Payment", paymentSchema);
+// Create the Payment model
+const Payment = mongoose.model("Payment", payment);
 
 module.exports = Payment;

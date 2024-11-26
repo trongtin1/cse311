@@ -10,7 +10,7 @@ const formSchema = z.object({
   input: z.string().min(2).max(30),
 });
 
-const SearchInput = ({ onClose }: SearchInputProps) => {
+const SearchInput = ({ onClose }: { onClose: () => void }) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({

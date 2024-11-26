@@ -1,7 +1,6 @@
 import CaroselBanner from "@/components/MOVIE/CaroselBanner";
 import MovieContainer from "@/components/MOVIE/MovieContainer";
 
-import Header from "@/components/Header";
 import {
   getNowPlayingMovies,
   getPopularMovies,

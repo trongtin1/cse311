@@ -206,11 +206,13 @@ export type LinkItem = {
 };
 
 export interface IUser {
-  clerkId: string;
   email: string;
-  username: string;
+  name: string;
   firstName?: string;
   lastName?: string;
   photo?: string;
+  provider: string;
+  providerId: string;
   _id?: string;
+  createdAt?: Date;
 }

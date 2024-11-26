@@ -1,79 +1,114 @@
 require("dotenv").config();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 const jwt = require("jsonwebtoken");
+const saltRounds = 10;
 
 const createUserService = async (userData) => {
   try {
-    const existingUser = await User.findOne({
-      $or: [{ email: userData.email }, { clerkId: userData.clerkId }],
-    });
-
-    if (existingUser) {
-      console.log("User already exists");
+    if (!userData || !userData.email) {
       return {
-        success: false,
-        message: "User with this email or Clerk ID already exists",
+        EC: 1,
+        EM: "Invalid user data provided",
+        DT: null,
       };
     }
-
+    const existingUser = await User.findOne({ email: userData.email });
+    if (existingUser) {
+      return {
+        EC: 1,
+        EM: "User with this email already exists",
+        DT: existingUser,
+      };
+    }
+    // Hash password if provided
+    if (userData.password) {
+      const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
+      userData.password = hashedPassword;
+    }
     const user = await User.create({
-      clerkId: userData.clerkId,
       email: userData.email,
-      name: `${userData.firstName} ${userData.lastName}`.trim(),
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      photo: userData.photo,
+      name: userData.name,
+      password: userData.password,
     });
-
-    console.log("User created successfully:", user);
     return {
-      success: true,
-      data: user,
+      EC: 0,
+      EM: "User created successfully",
+      DT: user,
     };
   } catch (error) {
-    console.error("Error creating user:", error);
-    throw new Error("Database error while creating user");
+    console.error("Error in createUserService:", error);
+    return {
+      EC: -1,
+      EM: "Database error while creating user",
+      DT: null,
+    };
   }
 };
-
-const loginService = async (email) => {
+const loginService = async (email, password) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
     if (user) {
-      console.log("User exists");
-      return true; // Trả về true nếu user tồn tại
+      const isValid = await bcrypt.compare(password, user.password);
+      if (!isValid) {
+        return {
+          EC: 2,
+          EM: "Email/Password is incorrect",
+        };
+      } else {
+        return {
+          EC: 0,
+          EM: "Login successful",
+          DT: user,
+          access_token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+          }),
+        };
+      }
+    } else {
+      return {
+        EC: 1,
+        EM: "Email/Password is incorrect",
+      };
     }
-    return false; // Trả về false nếu không tìm thấy
   } catch (error) {
-    console.error(error);
-    throw error;
+    console.error("Error in loginService:", error);
+    return {
+      EC: -1,
+      EM: "Error during login",
+      DT: null,
+    };
   }
 };
-
 const getUserService = async () => {
   try {
-    let result = await User.find({});
-    return result;
+    const users = await User.find({}).select("-password");
+    return {
+      EC: 0,
+      EM: "Get users successful",
+      DT: users,
+    };
   } catch (error) {
-    console.log(error);
-    return null;
+    console.error("Error in getUserService:", error);
+    return {
+      EC: -1,
+      EM: "Error fetching users",
+      DT: null,
+    };
   }
 };
-
 const checkUserService = async (email) => {
-  try {
-    const user = await User.findOne({ email });
-    if (user) {
-      console.log("User exists in database");
-      return true;
-    }
-    console.log("User does not exist in database");
-    return false;
-  } catch (error) {
-    console.error("Error checking user:", error);
-    throw error;
+  const user = await User.findOne({ email: email });
+  if (user) {
+    return {
+      EC: 1,
+      EM: "Email already exists",
+    };
+  } else {
+    return {
+      EC: 0,
+      EM: "Email is available",
+    };
   }
 };
 module.exports = {

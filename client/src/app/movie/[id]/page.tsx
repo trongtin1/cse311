@@ -38,72 +38,92 @@ const MovieDetails = async ({ params: { id } }: Props) => {
   const popoularMovies = await getPopularMovies();
 
   return (
-    <div>
-      <div className="px-10">
-        <div className="py-10 flex flex-col lg:flex-row items-center gap-5">
-          <div className="w-full lg:w-1/2 min-h-96 rounded-md overflow-hidden group">
-            <Image
-              src={getImagePath(details?.backdrop_path)}
-              alt={details?.title}
-              width={1920}
-              height={1080}
-              className="w-full h-full object-cover shadow-md shadow-gray-900 drop-shadow-xl group-hover:scale-110 duration-500"
-            />
+    <div className="relative">
+      <div className="flex gap-8 max-w-7xl mx-auto p-6">
+        {/* Poster Image */}
+        <div className="w-80 h-[450px] relative flex-shrink-0">
+          <Image
+            src={getImagePath(details?.poster_path)}
+            alt={details?.title}
+            fill
+            className="object-cover rounded-lg"
+            priority
+          />
+        </div>
+
+        {/* Movie Details */}
+        <div className="space-y-6">
+          {/* Title and Year */}
+          <h1 className="text-4xl font-bold">
+            {details?.original_title} (
+            {new Date(details?.release_date).getFullYear()})
+          </h1>
+
+          {/* Movie Info Row */}
+          <div className="flex items-center gap-2 text-sm text-gray-200">
+            <span className="bg-gray-800 px-2 py-0.5 rounded">PG</span>
+            <span>{details?.release_date}</span>
+            <span>•</span>
+            <span>{details?.genres?.map((g: any) => g.name).join(", ")}</span>
+            <span>•</span>
+            <span>
+              {Math.floor(details?.runtime / 60)}h {details?.runtime % 60}m
+            </span>
           </div>
-          <div className="w-full lg:w-1/2 flex flex-col gap-2">
-            <h2 className="text-2xl font-semibold underline decoration-[1px]">
-              {details?.original_title}
-            </h2>
-            <p className="text-sm leading-6 tracking-wide mt-2">
-              {details?.overview}
-            </p>
-            <p className="text-gray-200 text-sm">
-              IMDB:{" "}
-              <span className="text-white font-medium">
-                {details.vote_average}
-              </span>
-            </p>
-            <p className="text-gray-200 text-sm">
-              Votes:{" "}
-              <span className="text-white font-medium">
-                {details.vote_count}
-              </span>
-            </p>
-            <p className="text-gray-200 text-sm">
-              Release Data:{" "}
-              <span className="text-white font-medium">
-                {details.release_date}
-              </span>
-            </p>
-            <p className="text-gray-200 text-sm">
-              Genres:{" "}
-              {details?.genres.map((item: any) => (
-                <span key={item?.id} className="text-white font-medium mr-1">
-                  {item?.name},
+
+          {/* User Score */}
+          <div className="flex items-center gap-6">
+            <div className="relative w-16 h-16">
+              <div className="w-full h-full rounded-full bg-blue-900 flex items-center justify-center">
+                <span className="text-2xl font-bold">
+                  {Math.round(details?.vote_average * 10)}%
                 </span>
-              ))}
-            </p>
-            <p className="text-gray-200 text-sm">
-              Tag Line:{" "}
-              <span className="text-white font-medium">{details.tagline}</span>
-            </p>
-            <p className="text-gray-200 text-sm">
-              Status:{" "}
-              <span
-                className={`font-medium ${
-                  details?.status === "Released"
-                    ? "text-green-500"
-                    : "text-red-500"
-                }`}
-              >
-                {details.status}
-              </span>
-            </p>
+              </div>
+            </div>
+            <span className="font-semibold">User Score</span>
+
+            {/* Action Buttons */}
+            <div className="flex gap-4">
+              <button className="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center">
+                <span>♡</span>
+              </button>
+              <button className="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center">
+                <span>★</span>
+              </button>
+              <button className="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center">
+                <span>▶</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Tagline */}
+          <p className="italic text-gray-400">{details?.tagline}</p>
+
+          {/* Overview */}
+          <div>
+            <h3 className="text-xl font-bold mb-2">Overview</h3>
+            <p className="text-gray-200">{details?.overview}</p>
+          </div>
+
+          {/* Crew */}
+          <div className="grid grid-cols-3 gap-4 mt-6">
+            {details?.credits?.crew?.slice(0, 3).map((person: any) => (
+              <div key={person.id}>
+                <h4 className="font-bold">{person.name}</h4>
+                <p className="text-sm text-gray-400">{person.job}</p>
+              </div>
+            ))}
           </div>
         </div>
+      </div>
+
+      {/* Video Player Section */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
         <VideoPlayer videos={videos} />
       </div>
-      <div className="mt-6">
+
+      {/* Popular Movies Section */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
         <MovieContainer
           movies={popoularMovies}
           title="Popular Movies"
