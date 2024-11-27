@@ -32,7 +32,7 @@ const SocialLogin = () => {
               height={20}
               className="mr-2"
             />
-            Đăng nhập bằng Google
+            Log in withGoogle
           </button>
 
           <button
@@ -46,15 +46,15 @@ const SocialLogin = () => {
               height={20}
               className="mr-2 brightness-0 invert"
             />
-            Đăng nhập bằng Github
+            Log in with Github
           </button>
         </div>
 
         <div className="mt-8 text-gray-400 text-sm">
           <p>
-            Đăng nhập bằng email?{" "}
+            Login in with email?{" "}
             <Link href="/login" className="text-white hover:underline">
-              Đăng nhập ngay
+              Log in now
             </Link>
           </p>
         </div>

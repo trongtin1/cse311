@@ -22,7 +22,7 @@ const Login = () => {
       });
 
       if (result?.error) {
-        setErrorMessage("Email hoặc mật khẩu không chính xác");
+        setErrorMessage("Invalid email or password");
         return;
       }
 
@@ -31,8 +31,8 @@ const Login = () => {
         window.location.href = "/homepage";
       }
     } catch (error) {
-      console.error("Đăng nhập thất bại:", error);
-      setErrorMessage("Đã xảy ra lỗi. Vui lòng thử lại.");
+      console.error("Login failed::", error);
+      setErrorMessage("An error occurred. Please try again.");
     }
   };
 
@@ -84,18 +84,18 @@ const Login = () => {
             Log in
           </button>
           <div className="mt-8 text-gray-400 text-sm">
-            <p>
-              Đăng nhập bằng mạng xã hội?{" "}
+<p>
+            Log in with social media?{" "}
               <Link href="/social-login" className="text-white hover:underline">
-                Đăng nhập với Google/Github
+                Log in with Google/Github
               </Link>
             </p>
           </div>
           <div className="mt-8 text-gray-400 text-sm">
             <p>
-              Chưa có tài khoản?{" "}
+            Don't have an account?{" "}
               <Link href="/register" className="text-white hover:underline">
-                Đăng ký ngay
+                Sign up now
               </Link>
             </p>
           </div>
