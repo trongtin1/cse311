@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const HEADERS = {
@@ -12,22 +14,22 @@ const HEADERS = {
 
 const Home: React.FC = () => {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState<string>(""); // Từ khóa tìm kiếm
-  const [movies, setMovies] = useState<any[]>([]); // Kết quả phim
-  const [error, setError] = useState<string>(""); // Thông báo lỗi
-  const [noResults, setNoResults] = useState<boolean>(false); // Trạng thái không tìm thấy kết quả
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [movies, setMovies] = useState<any[]>([]);
+  const [error, setError] = useState<string>("");
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!searchTerm.trim()) {
       setError("Please enter a search term!");
-      setNoResults(false);
+      setMovies([]);
       return;
     }
 
     setError("");
-    setNoResults(false);
+    setIsSearching(true);
 
     try {
       const response = await axios.get(`${BASE_URL}/search/movie`, {
@@ -39,17 +41,17 @@ const Home: React.FC = () => {
         },
       });
 
-      const results = response.data.results;
-
-      // Nếu không có kết quả
-      if (results.length === 0) {
-        setNoResults(true);
-      }
-
-      setMovies(results);
+      setMovies(response.data.results.slice(0, 10));
     } catch (err) {
       setError("Failed to fetch movies. Please try again later.");
+    } finally {
+      setIsSearching(false);
     }
+  };
+
+  // Thêm hàm xử lý khi click vào "View all results"
+  const handleViewAllResults = () => {
+    router.push(`/search/${encodeURIComponent(searchTerm.trim())}`);
   };
 
   return (
@@ -59,57 +61,69 @@ const Home: React.FC = () => {
     >
       <header className="text-center mt-0 mb-6" style={{ marginTop: "-30px" }}>
         <h1 className="text-7xl font-bold m-0">Movie Website</h1>
-        <p className="text-2xl text-red-500 m-0">Track your movies the smart way!</p>
+        <p className="text-2xl text-red-500 m-0">
+          Track your movies the smart way!
+        </p>
       </header>
 
-      {/* Form tìm kiếm */}
-      <form className="w-full max-w-md mb-4" onSubmit={handleSearch}>
-        <div className="flex items-center justify-center">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search for a movie..."
-            className="flex-grow px-4 py-3 rounded-l border border-gray-300 focus:outline-none focus:border-red-500"
-          />
-          <button
-            type="submit"
-            className="px-6 py-3 bg-red-500 text-white rounded-r hover:bg-red-600 focus:outline-none"
-          >
-            Search
-          </button>
-        </div>
-      </form>
+      <div className="w-full max-w-md relative">
+        <form className="mb-2" onSubmit={handleSearch}>
+          <div className="flex items-center justify-center">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search for a movie..."
+              className="flex-grow px-4 py-3 rounded-l border border-gray-300 focus:outline-none focus:border-red-500"
+            />
+            <button
+              type="submit"
+              className="px-6 py-3 bg-red-500 text-white rounded-r hover:bg-red-600 focus:outline-none"
+            >
+              Search
+            </button>
+          </div>
+        </form>
 
-      {/* Hiển thị thông báo lỗi */}
-      {error && <div className="text-red-500 mb-4">{error}</div>}
+        {error && <div className="text-red-500 mb-4">{error}</div>}
 
-      {/* Hiển thị thông báo không tìm thấy kết quả */}
-      {noResults && <div className="text-gray-500 mb-4">No movies found!</div>}
+        {/* Dropdown kết quả tìm kiếm */}
+        {movies.length > 0 && (
+          <div className="absolute w-full bg-white rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+            {movies.map((movie) => (
+              <Link
+                href={`/movie/${movie.id}`}
+                key={movie.id}
+                className="flex items-center p-3 hover:bg-gray-100 transition-colors"
+              >
+                <div className="w-12 h-16 relative flex-shrink-0">
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    width={48}
+                    height={64}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="ml-4">
+                  <h3 className="font-semibold text-gray-800">{movie.title}</h3>
+                  <p className="text-sm text-gray-500">
+                    {new Date(movie.release_date).getFullYear()}
+                  </p>
+                </div>
+              </Link>
+            ))}
 
-      {/* Hiển thị danh sách phim */}
-      {movies.length > 0 && (
-        <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {movies.map((movie) => (
-            <div key={movie.id} className="bg-white shadow rounded overflow-hidden">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-bold">{movie.title}</h3>
-                <p className="text-sm text-gray-500">
-                  Release Date: {movie.release_date || "N/A"}
-                </p>
-                <p className="text-sm text-gray-700">
-                  {movie.overview || "No description available."}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+            {/* Nút "View all results" */}
+            <button
+              onClick={handleViewAllResults}
+              className="w-full p-3 text-center text-red-500 hover:bg-gray-100 transition-colors border-t"
+            >
+              View all results
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

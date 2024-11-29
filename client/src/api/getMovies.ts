@@ -1,20 +1,17 @@
 import axios from "axios";
-import { SearchResults } from "../../type";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const HEADERS = {
   accept: "application/json",
-  Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_KEY}`,
+  Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_READ_ACCESS_KEY}`,
 };
 const DEFAULT_PARAMS = {
   include_adult: "false",
   include_video: "false",
   sort_by: "popularity.desc",
   language: "en-US",
-  page: (Math.floor(Math.random() * 60) + 1).toString(),  
+  page: (Math.floor(Math.random() * 60) + 1).toString(),
 };
-
-// console.log(DEFAULT_PARAMS);
 
 // Hàm lấy danh sách phim đang chiếu
 export const getNowPlayingMovies = async () => {
@@ -90,25 +87,4 @@ export const getMovieDetails = async (id: string) => {
     params: DEFAULT_PARAMS,
   });
   return response.data;
-};
-// utils/fetchGenres.ts
-
-export const fetchGenres = async () => {
-  const url = "https://api.themoviedb.org/3/genre/movie/list?language=en";
-  const options: RequestInit = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_KEY}`,
-    },
-  };
-
-  const response = await fetch(url, options);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch genres");
-  }
-
-  const data = await response.json();
-  return data; // Trả về dữ liệu genres
 };

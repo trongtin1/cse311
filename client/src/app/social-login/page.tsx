@@ -32,7 +32,7 @@ const SocialLogin = () => {
               height={20}
               className="mr-2"
             />
-            Log in withGoogle
+            Log in with Google
           </button>
 
           <button

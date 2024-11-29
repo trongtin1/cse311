@@ -16,6 +16,7 @@ const nextConfig = {
       },
     ],
     domains: ["avatars.githubusercontent.com"],
+    domains: ["image.tmdb.org"],
   },
 };
 

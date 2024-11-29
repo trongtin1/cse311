@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import GenreNavigate from "./NavigationContainer";
 import { Search, Bookmark } from "lucide-react";
@@ -12,6 +12,7 @@ import ProfileDropdown from "./ProfileDropdown";
 
 const Header = () => {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -57,10 +58,10 @@ const Header = () => {
         ) : (
           <div className="flex items-center space-x-4">
             <a
-              href="/login"
+              href={pathname === "/login" ? "/register" : "/login"}
               className="text-white hover:text-gray-300 px-4 py-2 rounded-md border border-white/80 hover:border-white transition-colors"
             >
-              Sign in
+              {pathname === "/login" ? "Register" : "Sign in"}
             </a>
           </div>
         )}

@@ -84,8 +84,8 @@ const Login = () => {
             Log in
           </button>
           <div className="mt-8 text-gray-400 text-sm">
-<p>
-            Log in with social media?{" "}
+            <p>
+              Log in with social media?{" "}
               <Link href="/social-login" className="text-white hover:underline">
                 Log in with Google/Github
               </Link>
@@ -93,7 +93,7 @@ const Login = () => {
           </div>
           <div className="mt-8 text-gray-400 text-sm">
             <p>
-            Don't have an account?{" "}
+              Don't have an account?{" "}
               <Link href="/register" className="text-white hover:underline">
                 Sign up now
               </Link>
