@@ -1,7 +1,6 @@
 import axios from "axios";
 import { SearchResults } from "../../type";
 
-
 const BASE_URL = "https://api.themoviedb.org/3";
 const HEADERS = {
   accept: "application/json",
@@ -12,24 +11,18 @@ const DEFAULT_PARAMS = {
   include_video: "false",
   sort_by: "popularity.desc",
   language: "en-US",
-  page: "1", // Set a default page
+  page: (Math.floor(Math.random() * 60) + 1).toString(),  
 };
-
 
 // console.log(DEFAULT_PARAMS);
 
 // Hàm lấy danh sách phim đang chiếu
-export const getNowPlayingMovies = async (term: string) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/search/movie`, {
-      headers: HEADERS,
-      params: { ...DEFAULT_PARAMS, query: term },
-    });
-    return response.data.results;
-  } catch (error) {
-    console.error("Error fetching searched movies:", error.response?.data || error.message);
-    throw error;
-  }
+export const getNowPlayingMovies = async () => {
+  const response = await axios.get(`${BASE_URL}/movie/now_playing`, {
+    headers: HEADERS,
+    params: DEFAULT_PARAMS,
+  });
+  return response.data.results;
 };
 
 // Hàm lấy danh sách phim sắp chiếu
