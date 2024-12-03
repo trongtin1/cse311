@@ -1,0 +1,13 @@
+{
+    "register": {
+        "sign_up": "Sign up",
+        "name": "Name",
+        "email": "Email",
+        "password": "Password",
+        "sign_in_now": "Sign up now",
+        "i_have_an_account": "I have an account",
+        "remember_me": "Remember me",
+        "need_help": "Need help?",
+        "log_in": "Log in"
+    }
+}

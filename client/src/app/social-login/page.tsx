@@ -2,8 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-
+import { useTranslation } from "react-i18next";
 const SocialLogin = () => {
+  const { t, i18n } = useTranslation('login');
   const handleProviderSubmit = async (provider: string) => {
     try {
       await signIn(provider, {
@@ -18,7 +19,7 @@ const SocialLogin = () => {
   return (
     <div className="relative flex justify-center items-center min-h-screen h-screen p-8">
       <div className="w-full max-w-md bg-black/75 rounded p-16 z-10">
-        <h1 className="text-2xl font-medium mb-7 text-white">Social Login</h1>
+        <h1 className="text-2xl font-medium mb-7 text-white">{t("login.social_login")}</h1>
 
         <div className="space-y-4">
           <button
@@ -32,7 +33,8 @@ const SocialLogin = () => {
               height={20}
               className="mr-2"
             />
-            Log in with Google
+            {t("login.Log_in_with_google")}
+        
           </button>
 
           <button
@@ -46,15 +48,16 @@ const SocialLogin = () => {
               height={20}
               className="mr-2 brightness-0 invert"
             />
-            Log in with Github
+              {t("login.Log_in_with_github")}
+            
           </button>
         </div>
 
         <div className="mt-8 text-gray-400 text-sm">
           <p>
-            Login in with email?{" "}
+            {t("login.log_in_with_email")}{" "}
             <Link href="/login" className="text-white hover:underline">
-              Log in now
+              {t("login.log_in_now")}
             </Link>
           </p>
         </div>

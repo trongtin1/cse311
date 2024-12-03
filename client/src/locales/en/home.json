@@ -1,0 +1,63 @@
+{
+        "home": {
+                "movie_website": "Movie Website",
+                "Search": "Search",
+                "Please_enter_a_search_term": "Please enter a search term!",
+                "search_for_a_movie": "Search for a movie",
+                "can_not_find_film": "Cannot find the film ",
+                "help_center": "help center",
+                "account": "account",
+                "blog": "blog",
+                "contact": "contact",
+                "no_results_found": "No results found",
+                "login":"Log in",
+                "register":"Register",
+
+        
+                 
+
+
+
+
+                
+                "explore": "EXPLORE",
+                "legal": "LEGAL",
+                "support": "SUPPORT",
+                "cookies_preferences": "Cookies Preferences",
+                "privacy_policy": "Privacy Policy",
+                "terms_of_use": "Terms of Use",
+                "legal_notices": "Legal Notices",
+                "faq": "FAQ",
+                "speed_test": "Speed Test",
+                "contact_us": "Contact Us",
+                "online_movie_streaming": "Online Movie Streaming",
+                "bringing_cinema_to_home": "Bringing Cinema To Home",
+
+
+
+
+                "movies_title": "MOVIES",
+                "tv_shows_title": "TV SHOWS",
+                "audiobook_title": "AUDIOBOOKS",
+                "blog_title": "BLOG",
+
+
+
+                "now_playing_title": "Now Playing",
+                "upcoming_title": "Upcoming",
+                "top_rated_title": "Top Rated",
+                "popular_title": "Popular"
+
+
+
+                 
+
+
+
+
+
+
+
+        }
+       
+}

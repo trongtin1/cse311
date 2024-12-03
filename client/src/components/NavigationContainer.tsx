@@ -6,16 +6,18 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import { useTranslation } from "react-i18next";
 
 const GenreNavigate = () => {
+  const { t } = useTranslation(['home']);
   return (
     <NavigationMenu>
       <NavigationMenuList className="flex items-center space-x-8">
         {[
-          { title: "MOVIES", href: "/homepage" },
-          { title: "TV SHOWS", href: "/tv-shows" },
-          { title: "AUDIOBOOKS", href: "" },
-          { title: "BLOG", href: "" },
+             { title: t("home.movies_title"), href: "/homepage" },
+             { title: t("home.tv_shows_title"), href: "/tv-shows" },
+             { title: t("home.audiobook_title"), href: "" },
+             { title: t("home.blog_title"), href: "" },
         ].map((item) => (
           <NavigationMenuItem key={item.title}>
             <Link href={item.href} legacyBehavior passHref>

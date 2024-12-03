@@ -1,0 +1,54 @@
+{
+        "home": {
+            
+                "movie_website": "Trang Web phim",
+                "Search": "Tìm Kiếm",
+                "Please_enter_a_search_term": "Vui lòng nhập từ khóa tìm kiếm!",
+                "search_for_a_movie": "Tìm kiếm một bộ phim",
+                "help_center": "trung tâm hỗ trợ",
+                "account": "tài khoản",
+                "no_results_found": "Không tìm thấy kết quả",
+
+                "login":"Đăng nhập",
+                "register":"Đăng ký",
+
+
+
+
+
+
+
+                "blog": "blog",
+                "contact": "liên hệ",
+                "explore": "KHÁM PHÁ",
+                "legal": "HỢP PHÁP",
+                
+                "support": "HỖ TRỢ",
+                "cookies_preferences": "Tùy Chọn Cookie",
+                "privacy_policy": "Chính Sách Quyền Riêng Tư",
+                "terms_of_use": "Điều Khoản Sử Dụng",
+                "legal_notices": "Thông Báo Pháp Lý",
+                "faq": "Câu Hỏi Thường Gặp",
+                "speed_test": "Kiểm Tra Tốc Độ",
+                "contact_us": "Liên Hệ Chúng Tôi",
+                 "online_movie_streaming": "Xem Phim Trực Tuyến",
+                "bringing_cinema_to_home": "Mang Rạp Chiếu Phim Về Nhà",
+
+
+
+
+                "movies_title": "PHIM",
+                "tv_shows_title": "TRUYỀN HÌNH",
+                "audiobook_title": "SÁCH NÓI",
+                "blog_title": "BLOG",
+
+
+
+                "now_playing_title": "Đang chiếu",
+                "upcoming_title": "Sắp ra mắt",
+                "top_rated_title": "Xếp hạng cao",
+                "popular_title": "Phổ biến"
+            }
+        
+        }
+

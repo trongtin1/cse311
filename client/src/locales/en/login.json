@@ -1,0 +1,19 @@
+{
+    "login": {
+        "log_in": "Log in",
+        "password": "password",
+        "Log_in_with_Google_Github": "Log in with Google/Github ",
+        "Log_in_with_socialMedia": "Log in with social media?",
+        "dont_have_account": "Don't have an account?",
+        "sign_up_now": "Sign up now",
+        "remember_me": "Remember me",
+        "need_help": "Need help?",
+        "social_login": "Social login",
+        "Log_in_with_google": "Log in with Google",
+        "Log_in_with_github": "Log in with Github",
+        "log_in_with_email": "Log in with Email",
+        "log_in_now": "Log in now",
+        "invalid_email_password" :"Invalid Email or password"
+        
+    }
+}

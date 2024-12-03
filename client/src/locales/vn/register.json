@@ -1,0 +1,13 @@
+{
+    "register": {
+        "sign_up": "Đăng ký",
+        "name": "Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "sign_in_now": "Đăng nhập ngay",
+        "i_have_an_account": "Tôi đã có tài khoản",
+         "remember_me": "Ghi nhớ tôi",
+        "need_help": "Cần hỗ trợ?",
+        "log_in": "Đăng nhập"
+    }
+}

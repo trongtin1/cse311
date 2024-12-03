@@ -1,0 +1,24 @@
+{
+    "genres": {
+      "action": "Hành động",
+      "adventure": "Phiêu lưu",
+      "animation": "Hoạt hình",
+      "comedy": "Hài",
+      "crime": "Tội phạm",
+      "documentary": "Tài liệu",
+      "drama": "Chính kịch",
+      "family": "Gia đình",
+      "fantasy": "Kỳ ảo",
+      "history": "Lịch sử",
+      "horror": "Kinh dị",
+      "music": "Âm nhạc",
+      "mystery": "Bí ẩn",
+      "romance": "Lãng mạn",
+      "science_fiction": "Khoa học viễn tưởng",
+      "tv_movie": "Phim truyền hình",
+      "thriller": "Hồi hộp",
+      "war": "Chiến tranh",
+      "western": "Viễn Tây"
+    }
+  }
+  
