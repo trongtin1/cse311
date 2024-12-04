@@ -62,7 +62,7 @@ export const getPopularTv = async () => {
 // Hàm tìm kiếm TV dựa trên từ khóa và thể loại
 export const getDiscoverTv = async (id?: string, keywords?: string) => {
   const params: Record<string, string> = { ...DEFAULT_PARAMS };
-  if (id) params.with_ = id;
+  if (id) params.with_genres = id;
   if (keywords) params.with_keywords = keywords;
 
   const response = await axios.get(`${BASE_URL}/discover/tv`, {

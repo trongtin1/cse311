@@ -6,13 +6,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-import { useTranslation } from "react-i18next";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // Biến trạng thái để lưu thông báo lỗi
   const router = useRouter(); // Sử dụng useRouter để điều hướng
-  const { t ,i18n} = useTranslation('login');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +22,7 @@ const Login = () => {
       });
 
       if (result?.error) {
-        setErrorMessage(t("login.invalid_email_password"));
+        setErrorMessage("Invalid email or password");
         return;
       }
 
@@ -54,7 +52,7 @@ const Login = () => {
     <div className="relative flex justify-center items-center min-h-screen h-screen p-8">
       {/* Form Container */}
       <div className="w-full max-w-md bg-black/75 rounded p-16 z-10">
-        <h1 className="text-2xl font-medium mb-7 text-white"> {t('login.log_in')}</h1>
+        <h1 className="text-2xl font-medium mb-7 text-white">Log in</h1>
         {/* Hiển thị thông báo lỗi nếu có */}
         {errorMessage && (
           <div className="bg-red-600 text-white p-3 rounded mb-5 text-center">
@@ -71,7 +69,7 @@ const Login = () => {
           />
           <input
             type="password"
-            placeholder={t('login.password')}
+            placeholder="Password"
             className="w-full h-12 bg-gray-800 text-white mb-3 p-4 rounded outline-none"
             value={password}
             onChange={handlePasswordChange} // Sử dụng hàm handlePasswordChange
@@ -83,38 +81,38 @@ const Login = () => {
             }`}
             disabled={!email || !password} // Disable nếu chưa nhập đủ thông tin
           >
-          {t('login.log_in')}
-            
+            Log in
           </button>
           <div className="mt-8 text-gray-400 text-sm">
             <p>
-              {t('login.Log_in_with_socialMedia')}{" "}
+              Log in with social media?{" "}
               <Link href="/social-login" className="text-white hover:underline">
-              {t('login.Log_in_with_Google_Github')}
-                
+                Log in with Google/Github
               </Link>
             </p>
           </div>
           <div className="mt-8 text-gray-400 text-sm">
             <p>
-              {t('login.dont_have_account')}{" "}
+              Don't have an account?{" "}
               <Link href="/register" className="text-white hover:underline">
-              {t('login.sign_up_now')}
+                Sign up now
               </Link>
             </p>
           </div>
           <div className="flex justify-between items-center text-sm text-gray-400 mt-4">
             <div className="flex items-center gap-2">
               <input type="checkbox" id="remember" className="w-4 h-4" />
-              <label htmlFor="remember">{t('login.remember_me')}</label>
+              <label htmlFor="remember">Remember me</label>
             </div>
-            <p>{t('login.need_help')}</p>
+            <p>Need help?</p>
           </div>
         </form>
         <div className="mt-10 text-gray-500">
           <p>
-         {" "}
-          
+            I have an account{" "}
+            <Link href="/register" className="text-white font-medium">
+              Sign Up Now
+            </Link>
           </p>
         </div>
       </div>

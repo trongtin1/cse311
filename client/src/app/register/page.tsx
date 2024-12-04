@@ -3,23 +3,20 @@ import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
-import { register } from "module";
+
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const { t, i18n } = useTranslation('register');
-
 
   const handleInputChange =
     (setter: (value: string) => void) =>
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        setter(e.target.value);
-        setError(""); // Xóa thông báo lỗi khi người dùng nhập
-      };
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setter(e.target.value);
+      setError(""); // Xóa thông báo lỗi khi người dùng nhập
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Ngăn chặn hành động mặc định của form
@@ -48,7 +45,7 @@ const RegisterPage = () => {
     } catch (error) {
       console.error("Registration error:", error);
       setError(
-        (error as any).response?.data?.EM || "An error occurred during registration"
+        error.response?.data?.EM || "An error occurred during registration"
       );
     }
   };
@@ -56,7 +53,7 @@ const RegisterPage = () => {
   return (
     <div className="relative flex justify-center items-center min-h-screen h-screen p-8">
       <div className="w-full max-w-md bg-black/75 rounded p-16 z-10">
-        <h1 className="text-2xl font-medium mb-7 text-white"> {t('register.sign_up')}</h1>
+        <h1 className="text-2xl font-medium mb-7 text-white">Sign up</h1>
 
         {/* Hiển thị thông báo lỗi nếu có */}
         {error && (
@@ -67,14 +64,14 @@ const RegisterPage = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder={t('register.name')}
+            placeholder="Name"
             className="w-full h-12 bg-gray-800 text-white mb-3 p-4 rounded outline-none"
             value={name}
             onChange={handleInputChange(setName)}
             required
           />
           <input
-            type="text"
+            type="email"
             placeholder="Email"
             className="w-full h-12 bg-gray-800 text-white mb-3 p-4 rounded outline-none"
             value={email}
@@ -82,8 +79,8 @@ const RegisterPage = () => {
             required
           />
           <input
-            type="text"
-            placeholder={t('register.password')}
+            type="password"
+            placeholder="Password"
             className="w-full h-12 bg-gray-800 text-white mb-3 p-4 rounded outline-none"
             value={password}
             onChange={handleInputChange(setPassword)}
@@ -91,30 +88,31 @@ const RegisterPage = () => {
           />
           <button
             type="submit"
-            className={`w-full bg-red-600 h-12 text-white rounded mt-5 cursor-pointer hover:bg-red-700 ${!name || !email || !password
-              ? "opacity-50 cursor-not-allowed"
-              : ""
-              }`}
+            className={`w-full bg-red-600 h-12 text-white rounded mt-5 cursor-pointer hover:bg-red-700 ${
+              !name || !email || !password
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
             disabled={!name || !email || !password}
           >
-            {t('register.sign_up')}
+            Sign up
           </button>
           <div className="flex justify-between items-center text-sm text-gray-400 mt-4">
             <div className="flex items-center gap-2">
               <input type="checkbox" id="remember" className="w-4 h-4" />
-              <label htmlFor="remember">{t('register.remember_me')}</label>
+              <label htmlFor="remember">Remember me</label>
             </div>
-            <p>{t('register.need_help')}</p>
+            <p>Need help?</p>
           </div>
         </form>
         <div className="mt-10 text-gray-500">
           <p>
-            {t('register.i_have_an_account')}{" "}
+            I have an account{" "}
             <Link
               href="/login"
               className="text-white font-medium cursor-pointer hover:underline"
             >
-              {t('register.sign_in_now')}
+              Log In Now
             </Link>
           </p>
         </div>
