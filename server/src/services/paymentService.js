@@ -37,7 +37,7 @@ const createPaymentService = async (requestData) => {
     lang = MOMO_CONFIG.lang,
   } = MOMO_CONFIG;
 
-  const amount = "10000";
+  const amount = "199000";
   const orderId = partnerCode + new Date().getTime();
   const requestId = orderId;
   const extraData = userDataBase64;

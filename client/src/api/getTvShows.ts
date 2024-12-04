@@ -4,7 +4,7 @@ import { SearchResults } from "../../type";
 const BASE_URL = "https://api.themoviedb.org/3";
 const HEADERS = {
   accept: "application/json",
-  Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_KEY}`,
+  Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_READ_ACCESS_KEY}`,
 };
 const DEFAULT_PARAMS = {
   include_adult: "false",

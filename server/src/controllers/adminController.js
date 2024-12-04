@@ -25,9 +25,17 @@ const adminController = {
 
   getDashboard: async (req, res) => {
     try {
-      const serviceResult = await adminService.getDashboardService();
-      if (serviceResult.EC === 0) {
-        res.render("admin/dashboard", serviceResult.DT);
+      const [usersResult, paymentsResult] = await Promise.all([
+        adminService.getDashboardService(),
+        adminService.getPaymentsService(),
+      ]);
+
+      if (usersResult.EC === 0 && paymentsResult.EC === 0) {
+        res.render("admin/dashboard", {
+          users: usersResult.DT.users,
+          payments: paymentsResult.DT,
+          admin: usersResult.DT.admin,
+        });
       } else {
         res.status(500).send("Server Error");
       }

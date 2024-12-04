@@ -1,0 +1,101 @@
+<div id="paymentsSection" class="bg-white rounded-lg shadow-lg p-6 hidden">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Payments Management</h2>
+        <div class="flex gap-2">
+            <select id="statusFilter" onchange="filterPayments()"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                <option value="all">All Status</option>
+                <option value="success">Success</option>
+                <option value="pending">Pending</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Payments Table -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Order ID
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        User Email
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Amount
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Status
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Created At
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="paymentsTableBody" class="bg-white divide-y divide-gray-200">
+                <% if (payments && payments.length> 0) { %>
+                    <% payments.forEach(payment=> { %>
+                        <tr class="payment-row" data-status="<%= payment.status %>">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <%= payment.orderId %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <%= payment.app_user %>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <%= payment.amount.toLocaleString() %> VND
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    <%= payment.status === 'success' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
+                                    <%= payment.status %>
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <%= new Date(payment.createdAt).toLocaleDateString() %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center">No payments found</td>
+                                </tr>
+                                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function filterPayments() {
+        const status = document.getElementById('statusFilter').value;
+        const rows = document.querySelectorAll('.payment-row');
+
+        rows.forEach(row => {
+            const rowStatus = row.getAttribute('data-status');
+            if (status === 'all' || status === rowStatus) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Hiển thị "No payments found" nếu không có kết quả
+        const visibleRows = document.querySelectorAll('.payment-row[style=""]').length;
+        const noResultsRow = document.querySelector('.no-results-row');
+
+        if (visibleRows === 0) {
+            if (!noResultsRow) {
+                const tbody = document.getElementById('paymentsTableBody');
+                const newRow = document.createElement('tr');
+                newRow.className = 'no-results-row';
+                newRow.innerHTML = '<td colspan="5" class="px-6 py-4 text-center">No payments found for selected status</td>';
+                tbody.appendChild(newRow);
+            }
+        } else if (noResultsRow) {
+            noResultsRow.remove();
+        }
+    }
+</script>

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const ADMIN_CONFIG = require("../config/admin");
 const User = require("../models/user");
+const Payment = require("../models/payment");
 
 const adminService = {
   loginService: async (username, password) => {
@@ -117,6 +118,24 @@ const adminService = {
       return {
         EC: -1,
         EM: "Error deleting user",
+        DT: null,
+      };
+    }
+  },
+
+  getPaymentsService: async () => {
+    try {
+      const payments = await Payment.find({}).sort({ createdAt: -1 });
+      return {
+        EC: 0,
+        EM: "Get payments successful",
+        DT: payments,
+      };
+    } catch (error) {
+      console.error("Get payments service error:", error);
+      return {
+        EC: -1,
+        EM: "Error getting payments",
         DT: null,
       };
     }

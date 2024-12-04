@@ -66,7 +66,11 @@ export const getDiscoverMovies = async (id?: string, keywords?: string) => {
 export const getSearchedMovies = async (term: string) => {
   const response = await axios.get(`${BASE_URL}/search/movie`, {
     headers: HEADERS,
-    params: { ...DEFAULT_PARAMS, query: term },
+    params: {
+      query: term,
+      language: "en-US",
+      include_adult: false,
+    },
   });
   return response.data.results;
 };
