@@ -8,11 +8,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16">
           {/* Questions Section */}
           <div>
-            <h2 className="text-[#FF0000] text-2xl mb-6 uppercase font-bold" >
+            <h2 className="text-[#FF0000] text-2xl mb-6 uppercase font-bold">
               Movie Website
             </h2>
             <p className="text-gray-400">
-            Bringing the cinema to your home.
+              Bringing the cinema to your home.
               {/* if to{" "}
               <Link href="#" className="underline">
                 specify a second
@@ -26,22 +26,34 @@ const Footer = () => {
             <h3 className="text-white uppercase font-bold mb-6">EXPLORE</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline" >
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Help Center
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Account
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Contact
                 </Link>
               </li>
@@ -53,22 +65,34 @@ const Footer = () => {
             <h3 className="text-white uppercase font-bold mb-6">LEGAL</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Cookies Preferences
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Term of Use
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Legal Notices
                 </Link>
               </li>
@@ -80,17 +104,26 @@ const Footer = () => {
             <h3 className="text-white uppercase font-bold mb-6">SUPPORT</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   FAQ
                 </Link>
               </li>
               <li>
-<Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Speed Test
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white underline">
+                <Link
+                  href="#"
+                  className="text-gray-400 hover:text-white underline"
+                >
                   Contact Us
                 </Link>
               </li>
@@ -116,6 +149,5 @@ const Footer = () => {
     </div>
   );
 };
-
 
 export default Footer;

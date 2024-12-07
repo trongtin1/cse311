@@ -107,14 +107,6 @@ const Login = () => {
             <p>Need help?</p>
           </div>
         </form>
-        <div className="mt-10 text-gray-500">
-          <p>
-            I have an account{" "}
-            <Link href="/register" className="text-white font-medium">
-              Sign Up Now
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );

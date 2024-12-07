@@ -2,7 +2,7 @@ const axios = require("axios");
 const crypto = require("crypto");
 const Payment = require("../models/payment");
 const User = require("../models/user");
-const NGROK_URL = process.env.NGROK;
+const url = process.env.NGROK;
 // Định nghĩa đầy đủ các hằng số
 const MOMO_CONFIG = {
   accessKey: "F8BBA842ECF85",
@@ -10,7 +10,7 @@ const MOMO_CONFIG = {
   partnerCode: "MOMO",
   orderInfo: "pay with MoMo",
   redirectUrl: "http://localhost:3000/",
-  ipnUrl: `${NGROK_URL}/callback`,
+  ipnUrl: "https://8a0e-171-250-165-235.ngrok-free.app/callback",
   requestType: "payWithMethod",
   extraData: "",
   orderGroupId: "",
@@ -37,7 +37,7 @@ const createPaymentService = async (requestData) => {
     lang = MOMO_CONFIG.lang,
   } = MOMO_CONFIG;
 
-  const amount = "199000";
+  const amount = "200000";
   const orderId = partnerCode + new Date().getTime();
   const requestId = orderId;
   const extraData = userDataBase64;
